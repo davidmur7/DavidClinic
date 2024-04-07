@@ -1,21 +1,21 @@
 # Author: David Murphy
-date_in_file = "."
+
 from datetime import datetime
 current_datetime = datetime.now()
 current_date = current_datetime.date()
 current_date_str = str(current_date)
 def main():
-    user_choice1 = input("Would you like to (1: Schedule an appointment) (2: View an appointment) (3: Cancel appointment) (4: exit) : ")
-    if user_choice1 == "1":
-        schedule_appointment()
-    elif user_choice1 == "2":
-        view_appointments()
-    elif user_choice1 == "3":
-        cancel_appointment()
-    else:
-        exit()
-    while user_choice1 != "4":
-        main()
+    while True:
+        user_choice1 = input("Would you like to (1: Schedule an appointment) (2: View an appointment) (3: Cancel appointment) (4: exit) : ")
+        if user_choice1 == "1":
+            schedule_appointment()
+        elif user_choice1 == "2":
+            view_appointments()
+        elif user_choice1 == "3":
+            cancel_appointment()
+        elif user_choice1 == "4":
+            exit()
+            break
 
 
 def schedule_appointment():
@@ -53,22 +53,26 @@ def view_appointments():
     user_choice2 = input("would you like to view appointments by date or name? (date/name) : ")
     if user_choice2 == "name":
         name = input("Enter the name: ")
+        name_in_file = "."
         with open("patient_data.txt", "r") as file:
             for line in file:
                 if name in line:
                     print(line)
-                else:
-                    print(f"{name} was not found in file ")
+                    name_in_file = "yes"
+        if name_in_file != "yes":
+            print(f"{name} was not found in file ")
     if user_choice2 == "date":
         chosen_date = input("Enter the date of the appointment (yyyy-mm-dd) : ")
+        date_in_file = "."
         with open("patient_data.txt", "r") as file:
             for line in file:
                 if chosen_date in line:
                     print(line)
                     date_in_file = "yes"
-            if date_in_file != "yes":
-                print("There are no appointments on this date ")
+        if date_in_file != "yes":
+            print("There are no appointments on this date ")
 def exit():
     print("Thank you for using our system")
+
 
 main()
