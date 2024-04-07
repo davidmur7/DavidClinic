@@ -1,4 +1,5 @@
 # Author: David Murphy
+date_in_file = "."
 from datetime import datetime
 current_datetime = datetime.now()
 current_date = current_datetime.date()
@@ -64,8 +65,9 @@ def view_appointments():
             for line in file:
                 if chosen_date in line:
                     print(line)
-                else:
-                    print("There are no appointments on this date ")
+                    date_in_file = "yes"
+            if date_in_file != "yes":
+                print("There are no appointments on this date ")
 def exit():
     print("Thank you for using our system")
 
