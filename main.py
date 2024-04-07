@@ -30,5 +30,10 @@ def schedule_appointment():
 cancel_appointment():
     name_for_cancel = input("Enter your name: ")
     date_for_cancel = input("Enter appointment date: ")
+    with open("patient_data.txt", "r") as file:
+        for line in file:
+            if name_for_cancel and date_for_cancel in line:
+                line = ""
+                file.write(line)
 
 main()
