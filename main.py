@@ -7,6 +7,9 @@ current_date_str = str(current_date)
 def main():
     while True:
         user_choice1 = input("Would you like to (1: Schedule an appointment) (2: View an appointment) (3: Cancel appointment) (4: exit) : ")
+        while user_choice1 not in ["1", "2", "3", "4"]:
+            print("Enter 1, 2, 3 or 4")
+            user_choice1 = input("Would you like to (1: Schedule an appointment) (2: View an appointment) (3: Cancel appointment) (4: exit) : ")
         if user_choice1 == "1":
             schedule_appointment()
         elif user_choice1 == "2":
@@ -36,18 +39,34 @@ def schedule_appointment():
     while int(appointment_date[0:4]) == int(current_date_str[0:4]) and int(appointment_date[5:7]) == int(current_date_str[5:7]) and int(appointment_date[8:10]) < int(current_date_str[8:10]):
         print("Incorrect date, day in the past ")
         appointment_date = input("Enter appointment date (yyyy-mm-dd) : ")
-    appointment_time = input("Enter your prefered time of appointment (hour:minute) : ")
+    appointment_time = input("Enter your preferred time of appointment (hour:minute) eg (9:30) (15:00) 9am to 5pm only : ")
+    while int(appointment_time[0:2]) <9 or int(appointment_time[0:2]) > 17:
+        print("We are unaviable at that time ")
+        appointment_time = input("Enter your preferred time of appointment (hour:minute) eg (9:30) (11:00) 9am to 5pm only : ")
+    is_time_available = "."
+    with open("patient_data.txt", "r") as file:
+        for line in file:
+            if appointment_date and appointment_time in line:
+                print("This time is not available, sorry ")
+                is_time_available = "no"
+    if is_time_available != "no":
+        print(f"{appointment_time} is avaiable")
+
     with open("patient_data.txt", "a") as file:
         file.write(f"\n{name}, {contact_number}, {appointment_date}, {appointment_time}")
 
 def cancel_appointment():
-    name_for_cancel = input("Enter your name: ")
+    name_for_cancel = input("Enter the name: ")
     date_for_cancel = input("Enter appointment date: ")
     with open("patient_data.txt", "r") as file:
-        for line in file:
+        lines = file.readlines()
+    with open("patient_data.txt", "a") as file:
+        for line in lines:
             if name_for_cancel and date_for_cancel in line:
-                line = ""
+                line = "deleted"
                 file.write(line)
+
+
 
 def view_appointments():
     user_choice2 = input("would you like to view appointments by date or name? (date/name) : ")
