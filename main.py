@@ -4,7 +4,18 @@ current_datetime = datetime.now()
 current_date = current_datetime.date()
 current_date_str = str(current_date)
 def main():
-    schedule_appointment()
+    user_choice1 = input("Would you like to (1: Schedule an appointment) (2: View an appointment) (3: Cancel appointment) (4: exit) : ")
+    if user_choice1 == "1":
+        schedule_appointment()
+    elif user_choice1 == "2":
+        view_appointments()
+    elif user_choice1 == "3":
+        cancel_appointment()
+    else:
+        exit()
+
+
+
 def schedule_appointment():
     name = input("Enter your name: ")
     while len(name) > 20 or len(name) < 1:
@@ -25,9 +36,9 @@ def schedule_appointment():
         appointment_date = input("Enter appointment date (yyyy-mm-dd) : ")
     appointment_time = input("Enter your prefered time of appointment (hour:minute) : ")
     with open("patient_data.txt", "a") as file:
-        file.write(f"{name}, {contact_number}, {appointment_date}, {appointment_time}")
+        file.write(f"\n{name}, {contact_number}, {appointment_date}, {appointment_time}")
 
-cancel_appointment():
+def cancel_appointment():
     name_for_cancel = input("Enter your name: ")
     date_for_cancel = input("Enter appointment date: ")
     with open("patient_data.txt", "r") as file:
@@ -35,5 +46,17 @@ cancel_appointment():
             if name_for_cancel and date_for_cancel in line:
                 line = ""
                 file.write(line)
+
+def view_appointments():
+    user_choice2 = input("would you like to view appointments by date or name? (date/name) : ")
+    if user_choice == "name":
+        name = input("Enter the name: ")
+        with open("patient_data.txt", "r") as file:
+            for line in file:
+                if name in line:
+                    print(line)
+
+def exit():
+    print("Thank you for using our system")
 
 main()
