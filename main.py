@@ -13,7 +13,8 @@ def main():
         cancel_appointment()
     else:
         exit()
-
+    while user_choice1 != "4":
+        main()
 
 
 def schedule_appointment():
@@ -49,13 +50,22 @@ def cancel_appointment():
 
 def view_appointments():
     user_choice2 = input("would you like to view appointments by date or name? (date/name) : ")
-    if user_choice == "name":
+    if user_choice2 == "name":
         name = input("Enter the name: ")
         with open("patient_data.txt", "r") as file:
             for line in file:
                 if name in line:
                     print(line)
-
+                else:
+                    print(f"{name} was not found in file ")
+    if user_choice2 == "date":
+        chosen_date = input("Enter the date of the appointment (yyyy-mm-dd) : ")
+        with open("patient_data.txt", "r") as file:
+            for line in file:
+                if chosen_date in line:
+                    print(line)
+                else:
+                    print("There are no appointments on this date ")
 def exit():
     print("Thank you for using our system")
 
