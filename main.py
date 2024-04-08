@@ -60,10 +60,9 @@ def cancel_appointment():
     date_for_cancel = input("Enter appointment date: ")
     with open("patient_data.txt", "r") as file:
         lines = file.readlines()
-    with open("patient_data.txt", "a") as file:
+    with open("patient_data.txt", "w") as file:
         for line in lines:
-            if name_for_cancel and date_for_cancel in line:
-                line = "deleted"
+            if name_for_cancel and date_for_cancel not in line:
                 file.write(line)
 
 
