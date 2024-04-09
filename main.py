@@ -6,9 +6,9 @@ current_date = current_datetime.date()
 current_date_str = str(current_date) # I will compare the appointment date to the current date
 def main():
     while True:
-        user_choice1 = input("Would you like to (1: Schedule an appointment) (2: View an appointment) (3: Cancel appointment) (4: View slots) (4: exit) : ")
-        while user_choice1 not in ["1", "2", "3", "4"]:
-            print("Enter 1, 2, 3 or 4")
+        user_choice1 = input("Would you like to (1: Schedule an appointment) (2: View an appointment) (3: Cancel appointment) (4: View slots) (5: exit) : ")
+        while user_choice1 not in ["1", "2", "3", "4", "5"]:
+            print("Enter 1, 2, 3, 4 or 5")
             user_choice1 = input("Would you like to (1: Schedule an appointment) (2: View an appointment) (3: Cancel appointment) (4: exit) : ")
         if user_choice1 == "1":
             schedule_appointment()
@@ -32,6 +32,7 @@ def schedule_appointment():
         print("Contact number needs to be a number of exactly 10 digits ")
         contact_number = (input("Enter your phone number: "))
     appointment_date = input("Enter appointment date (yyyy-mm-dd) : ")
+    print()
     while len(appointment_date) != 10:
         print("You need to enter the date in this format: (yyyy-mm-dd)")
         appointment_date = input("Enter appointment date (yyyy-mm-dd) : ")
@@ -104,14 +105,13 @@ def view_appointments():
             print("There are no appointments on this date ")
 
 def view_available_slots():
-    slots = ["9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00"]
+    slots = ["9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"]
     with open("patient_data.txt", "r") as file:
         lines = file.readlines()
-    print("Monday")
-    for i in range[9:17]:
-        print(i) + ":00"
-        print(i) + ":30"
-
+    print("\nAvailable Appointment Slots:\n")
+    print(f"Monday\tTuesday\tWednesday\tThursday\tFriday")
+    for i in slots:
+        print(i + "\t" + i + "\t" + i + "\t\t" + i + "\t\t" + i + "\t")
 
 
 
