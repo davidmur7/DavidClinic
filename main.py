@@ -3,10 +3,10 @@
 from datetime import datetime
 current_datetime = datetime.now()
 current_date = current_datetime.date()
-current_date_str = str(current_date)
+current_date_str = str(current_date) # I will compare the appointment date to the current date
 def main():
     while True:
-        user_choice1 = input("Would you like to (1: Schedule an appointment) (2: View an appointment) (3: Cancel appointment) (4: exit) : ")
+        user_choice1 = input("Would you like to (1: Schedule an appointment) (2: View an appointment) (3: Cancel appointment) (4: View slots) (4: exit) : ")
         while user_choice1 not in ["1", "2", "3", "4"]:
             print("Enter 1, 2, 3 or 4")
             user_choice1 = input("Would you like to (1: Schedule an appointment) (2: View an appointment) (3: Cancel appointment) (4: exit) : ")
@@ -17,6 +17,8 @@ def main():
         elif user_choice1 == "3":
             cancel_appointment()
         elif user_choice1 == "4":
+            view_available_slots()
+        elif user_choice1 == "5":
             exit()
             break
 
@@ -30,6 +32,9 @@ def schedule_appointment():
         print("Contact number needs to be a number of exactly 10 digits ")
         contact_number = (input("Enter your phone number: "))
     appointment_date = input("Enter appointment date (yyyy-mm-dd) : ")
+    while len(appointment_date) != 10:
+        print("You need to enter the date in this format: (yyyy-mm-dd)")
+        appointment_date = input("Enter appointment date (yyyy-mm-dd) : ")
     while int(appointment_date[0:4]) < int(current_date_str[0:4]):
         print("Incorrect date, year in the past ")
         appointment_date = input("Enter appointment date (yyyy-mm-dd) : ")
@@ -57,7 +62,12 @@ def schedule_appointment():
 
 def cancel_appointment():
     name_for_cancel = input("Enter the name: ")
+    while len(name_for_cancel) > 20 or len(name_for_cancel) < 1:
+        name_for_cancel = input("Enter the name: ")
     date_for_cancel = input("Enter appointment date: ")
+    while len(date_for_cancel) != 10:
+        print("You need to enter the date in this format: (yyyy-mm-dd)")
+        date_for_cancel = input("Enter appointment date: ")
     with open("patient_data.txt", "r") as file:
         lines = file.readlines()
     with open("patient_data.txt", "w") as file:
@@ -69,6 +79,9 @@ def cancel_appointment():
 
 def view_appointments():
     user_choice2 = input("would you like to view appointments by date or name? (date/name) : ")
+    while user_choice2 != "date" and user_choice2 != "name":
+        print("Enter 'name' or 'date' please")
+        user_choice2 = input("would you like to view appointments by date or name? (date/name) : ")
     if user_choice2 == "name":
         name = input("Enter the name: ")
         name_in_file = "."
@@ -89,6 +102,19 @@ def view_appointments():
                     date_in_file = "yes"
         if date_in_file != "yes":
             print("There are no appointments on this date ")
+
+def view_available_slots():
+    slots = ["9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00"]
+    with open("patient_data.txt", "r") as file:
+        lines = file.readlines()
+    print("Monday")
+    for i in range[9:17]:
+        print(i) + ":00"
+        print(i) + ":30"
+
+
+
+
 def exit():
     print("Thank you for using our system")
 
